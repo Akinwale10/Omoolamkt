@@ -1,0 +1,18 @@
+import React,{createContext,useContext,useEffect,useMemo,useState} from 'react';
+import {supabase,supabaseReady} from '../lib/supabase'; import {demoCategories,demoProducts} from '../data';
+const C=createContext(null); export const useStore=()=>useContext(C);
+export function StoreProvider({children}){
+ const [products,setProducts]=useState([]),[categories,setCategories]=useState([]),[banners,setBanners]=useState([]),[settings,setSettings]=useState(null),[loading,setLoading]=useState(true),[cart,setCart]=useState(()=>{try{return JSON.parse(localStorage.getItem('omoola-cart')||'[]')}catch{return[]}});
+ const [session,setSession]=useState(null),[admin,setAdmin]=useState(false);
+ const load=async()=>{if(!supabaseReady){setProducts(demoProducts);setCategories(demoCategories);setLoading(false);return}
+  setLoading(true); try{const [p,c,b,s]=await Promise.all([supabase.from('products').select('*,category:categories(name,slug)').eq('is_active',true).order('created_at',{ascending:false}),supabase.from('categories').select('*').eq('is_active',true).order('sort_order'),supabase.from('promotional_banners').select('*').eq('is_active',true).order('sort_order'),supabase.from('website_settings').select('*').limit(1).maybeSingle()]);
+   if(p.error)throw p.error; setProducts(p.data?.length?p.data:demoProducts);setCategories(c.data?.length?c.data:demoCategories);setBanners(b.data||[]);setSettings(s.data||null);
+  }catch(e){console.error(e);setProducts(demoProducts);setCategories(demoCategories)} finally{setLoading(false)} };
+ useEffect(()=>{load();if(!supabaseReady)return;supabase.auth.getSession().then(({data})=>setSession(data.session));const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>subscription.unsubscribe()},[]);
+ useEffect(()=>{localStorage.setItem('omoola-cart',JSON.stringify(cart))},[cart]);
+ useEffect(()=>{let alive=true;async function check(){if(!session?.user){setAdmin(false);return}const {data}=await supabase.from('admin_profiles').select('role').eq('user_id',session.user.id).maybeSingle();if(alive)setAdmin(Boolean(data))}check();return()=>{alive=false}},[session]);
+ const add=(p,q=1)=>setCart(old=>{const x=old.find(i=>i.id===p.id);return x?old.map(i=>i.id===p.id?{...i,quantity:i.quantity+q}:i):[...old,{...p,quantity:q}]});
+ const quantity=(id,q)=>setCart(old=>old.map(i=>i.id===id?{...i,quantity:Math.max(1,q)}:i));const remove=id=>setCart(old=>old.filter(i=>i.id!==id));const clear=()=>setCart([]);
+ const value=useMemo(()=>({products,categories,banners,settings,loading,cart,session,admin,add,quantity,remove,clear,refresh:load,subtotal:cart.reduce((s,i)=>s+i.price*i.quantity,0)}),[products,categories,banners,settings,loading,cart,session,admin]);
+ return <C.Provider value={value}>{children}</C.Provider>;
+}
