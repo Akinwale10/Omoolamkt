@@ -43,7 +43,8 @@ export function CsvImport(){
     const directPrice=rawPrice===''?NaN:Number(String(rawPrice).replace(/[₦,\s]/g,''));
     // Inventory valuation exports often contain total stock selling value, not unit price.
     // Convert that total into the unit selling price using the quantity on hand.
-    const calculatedPrice=Number.isFinite(directPrice)?directPrice:(totalSelling!==null&&stock>0?totalSelling/stock:NaN);\n    const price=Number.isFinite(calculatedPrice)&&calculatedPrice>0?calculatedPrice:0;
+    const calculatedPrice=Number.isFinite(directPrice)?directPrice:(totalSelling!==null&&stock>0?totalSelling/stock:NaN);
+    const price=Number.isFinite(calculatedPrice)&&calculatedPrice>0?calculatedPrice:0;
     const slug=csvSlug(csvValue(row,'slug')||name);
     const sku=csvValue(row,'sku','product_code','barcode')||null;
     const categoryName=csvValue(row,'category','category_name','department').toLowerCase();
