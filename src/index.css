@@ -55,3 +55,15 @@
 .hero-slide-admin-row{display:flex;align-items:center;gap:13px;padding:13px 0;border-bottom:1px solid #f0eaf1}.hero-slide-admin-row:last-child{border-bottom:0}.hero-slide-admin-row>img{width:112px;height:72px;object-fit:cover;border-radius:10px;background:#f3edf5}.hero-slide-admin-copy{flex:1;min-width:0;display:grid;gap:6px}.hero-slide-admin-copy>b{font-size:12px;color:#32105b}.hero-slide-admin-copy>small{font-size:10px;color:#938797}.hero-slide-admin-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.hero-slide-admin-actions button{font-size:10px;padding:7px 9px}.hero-slide-admin-actions button:disabled{opacity:.35}
 @media(max-width:700px){.hero.hero-background{height:auto;min-height:680px;padding:65px 22px 105px;align-items:center}.hero-background .hero-content{width:100%;max-width:100%}.hero-background-overlay{background:linear-gradient(90deg,rgba(28,5,52,.86),rgba(39,9,68,.57)),linear-gradient(0deg,rgba(25,5,43,.4),transparent 60%)}.hero-background .hero-content>p{font-size:14px;max-width:100%}.hero-background-controls{left:22px;bottom:48px}.hero-background .hero-trust{flex-wrap:wrap;gap:13px}.simple-shopping{padding:52px 18px}.simple-shopping-inner{grid-template-columns:1fr;gap:24px}.simple-shopping-image{height:230px}.simple-shopping-copy h2{font-size:32px}.hero-admin-layout{grid-template-columns:1fr}.hero-slide-admin-row>img{width:90px;height:65px}}
 @media(prefers-reduced-motion:reduce){.hero-background-slide{transition:none!important}}
+
+/* Rotating homepage hero typewriter messages */
+.hero-background .hero-typewriter{white-space:pre-line;min-height:2.25em;max-width:760px;line-height:1.06;overflow-wrap:normal}
+.hero-typewriter-caret{display:inline-block;margin-left:5px;color:#ff9a4d;font-weight:400;animation:omoolaCaretBlink .85s steps(2,start) infinite}
+.hero-background .hero-typewriter-description{min-height:3.6em;max-width:570px;white-space:normal;line-height:1.8}
+.hero-typewriter-letters{letter-spacing:0}
+.hero-typewriter-words{letter-spacing:-.025em}
+.hero-typewriter-soft-letters{letter-spacing:.012em;text-shadow:0 0 18px #ffffff20}
+.hero-typewriter-staggered-words{letter-spacing:-.018em}
+@keyframes omoolaCaretBlink{to{visibility:hidden}}
+@media(max-width:700px){.hero-background .hero-typewriter{min-height:2.35em;font-size:clamp(37px,10vw,52px)}.hero-background .hero-typewriter-description{min-height:5em;line-height:1.7}}
+@media(prefers-reduced-motion:reduce){.hero-typewriter-caret{animation:none;opacity:1}.hero-background .hero-typewriter,.hero-background .hero-typewriter-description{transition:none}}
