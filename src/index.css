@@ -160,16 +160,19 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 @media(max-width:760px){.about-hero-story{grid-template-columns:1fr;gap:26px;margin-bottom:45px}.about-story-image,.about-story-image img{min-height:230px;height:250px}.about-purpose-grid{grid-template-columns:1fr;gap:14px;margin-bottom:48px}.about-purpose-grid article{padding:23px}.about-values .value-grid{grid-template-columns:1fr;gap:13px}.about-values .value-grid>div{padding:22px}.about-values{margin-bottom:45px}.about-visit{flex-direction:column;align-items:stretch;gap:22px}.about-visit-actions{min-width:0;flex-direction:row;flex-wrap:wrap}.about-actions .btn,.about-visit-actions .btn{justify-content:center}}
 @media(max-width:420px){.about-actions,.about-visit-actions{flex-direction:column}.about-actions .btn,.about-visit-actions .btn{width:100%}}
 
-/* A small orange light circles only the link or button being activated */
-.orange-light-loading{position:relative!important;isolation:isolate;z-index:2!important}
-.orange-light-loading::after{content:"";position:absolute;inset:-4px;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 245deg,#ff8a00 285deg,#ffd28a 310deg,#ff8a00 330deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:orangeButtonOrbit 2s linear infinite}
-@keyframes orangeButtonOrbit{to{transform:rotate(360deg)}}
-@media(prefers-reduced-motion:reduce){.orange-light-loading::after{animation-duration:2s}}
+/* A glowing orange orbit travels around the clicked icon only */
+.icon-orbit-loading{position:relative;display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;isolation:isolate;border-radius:50%;line-height:0}
+.icon-orbit-loading::after{content:"";position:absolute;inset:-7px;border-radius:50%;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 225deg,#ff8a00 265deg,#ffe0a8 290deg,#ff8a00 320deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:iconOrbit 1.15s linear infinite}
+@keyframes iconOrbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.icon-orbit-loading::after{animation-duration:2s}}
 
 
-/* Requested product layout: 18 popular items (3 rows x 6 columns) and 16 shop items per page (2 rows x 8 columns) */
-.product-grid.home-popular-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
-.product-grid.shop-product-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+/* Product sections keep the requested full column counts on every screen.
+   Smaller screens can swipe horizontally rather than collapsing the grids. */
+.section-pad:has(.home-popular-grid){overflow-x:auto}
+.page-wrap:has(.shop-product-grid){overflow-x:auto}
+.product-grid.home-popular-grid{grid-template-columns:repeat(6,minmax(140px,1fr));gap:14px;width:max-content;min-width:100%}
+.product-grid.shop-product-grid{grid-template-columns:repeat(8,minmax(120px,1fr));gap:12px;width:max-content;min-width:100%}
 .home-popular-grid .product-photo,.shop-product-grid .product-photo{height:clamp(105px,12vw,165px)}
 .home-popular-grid .product-info,.shop-product-grid .product-info{padding:10px}
 .home-popular-grid .product-name,.shop-product-grid .product-name{font-size:12px;line-height:1.35;min-height:33px}
@@ -178,5 +181,3 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 .shop-pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin:32px auto 0}
 .shop-pagination>span{font-size:12px;color:#817487;font-weight:700}
 .shop-pagination .btn:disabled{opacity:.4;cursor:not-allowed}
-@media(max-width:1100px){.product-grid.home-popular-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-grid.shop-product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
-@media(max-width:700px){.product-grid.home-popular-grid,.product-grid.shop-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.home-popular-grid .product-photo,.shop-product-grid .product-photo{height:145px}.shop-pagination{gap:10px;flex-wrap:wrap}.shop-pagination .btn{padding:11px 15px}}
