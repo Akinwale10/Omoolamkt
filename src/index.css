@@ -160,11 +160,8 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 @media(max-width:760px){.about-hero-story{grid-template-columns:1fr;gap:26px;margin-bottom:45px}.about-story-image,.about-story-image img{min-height:230px;height:250px}.about-purpose-grid{grid-template-columns:1fr;gap:14px;margin-bottom:48px}.about-purpose-grid article{padding:23px}.about-values .value-grid{grid-template-columns:1fr;gap:13px}.about-values .value-grid>div{padding:22px}.about-values{margin-bottom:45px}.about-visit{flex-direction:column;align-items:stretch;gap:22px}.about-visit-actions{min-width:0;flex-direction:row;flex-wrap:wrap}.about-actions .btn,.about-visit-actions .btn{justify-content:center}}
 @media(max-width:420px){.about-actions,.about-visit-actions{flex-direction:column}.about-actions .btn,.about-visit-actions .btn{width:100%}}
 
-/* Two-second moving flashlight transition for storefront navigation and save actions */
-.navigation-flash{position:fixed;inset:0;z-index:99999;overflow:hidden;pointer-events:all;background:rgba(25,8,42,.42);backdrop-filter:blur(2px);-webkit-backdrop-filter:blur(2px);display:grid;place-items:center;animation:flashOverlayIn .18s ease-out both}
-.flash-orbit{position:absolute;width:min(42vw,360px);height:min(42vw,360px);min-width:210px;min-height:210px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.34) 0%,rgba(255,255,255,.18) 25%,rgba(255,174,108,.12) 48%,transparent 72%);filter:blur(2px);box-shadow:0 0 65px 20px rgba(255,183,111,.2);animation:flashlightRoll 2s cubic-bezier(.45,0,.55,1) both}
-.flash-orbit span{position:absolute;inset:8%;border-radius:50%;border:1px solid rgba(255,255,255,.55);box-shadow:0 0 22px rgba(255,190,130,.42),inset 0 0 25px rgba(255,255,255,.13)}
-.flash-caption{position:relative;z-index:1;margin-top:250px;padding:10px 18px;border:1px solid #ffffff35;border-radius:30px;background:rgba(42,13,67,.78);color:#fff;font-size:13px;font-weight:600;letter-spacing:.02em;box-shadow:0 8px 30px #16072545}
-@keyframes flashlightRoll{0%{transform:translate(-42vw,-28vh) scale(.65);opacity:.25}20%{opacity:1}25%{transform:translate(35vw,-27vh) scale(1.05)}50%{transform:translate(38vw,28vh) scale(.82)}75%{transform:translate(-38vw,30vh) scale(1.08)}100%{transform:translate(-42vw,-28vh) scale(.65);opacity:.98}}
-@keyframes flashOverlayIn{from{opacity:0}to{opacity:1}}
-@media(prefers-reduced-motion:reduce){.flash-orbit{animation-duration:2s;filter:none}.navigation-flash{backdrop-filter:none}}
+/* A small orange light circles only the link or button being activated */
+.orange-light-loading{position:relative!important;isolation:isolate;z-index:2!important}
+.orange-light-loading::after{content:"";position:absolute;inset:-4px;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 245deg,#ff8a00 285deg,#ffd28a 310deg,#ff8a00 330deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:orangeButtonOrbit 2s linear infinite}
+@keyframes orangeButtonOrbit{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.orange-light-loading::after{animation-duration:2s}}
