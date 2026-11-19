@@ -211,3 +211,10 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 button:focus-visible,a:focus-visible{outline:3px solid rgba(242,139,53,.55);outline-offset:3px}
 @media(hover:none){.product-card:hover,.category-card:hover,.promo-card:hover,.about-purpose-grid article:hover,.about-values .value-grid>div:hover{transform:none;box-shadow:none}.product-card:hover .product-photo img,.category-card:hover img,.promo-card:hover img{transform:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+/* Admin logout control stays visible on desktop and mobile */
+.admin-top-user{display:flex;align-items:center;gap:16px;min-width:0}
+.admin-top-user>span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-top-logout{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #eaddec;background:#fff;color:#5b2678;border-radius:9px;padding:9px 13px;font:700 11px Manrope,sans-serif;cursor:pointer;transition:background .2s ease,transform .2s ease,border-color .2s ease}
+.admin-top-logout:hover{background:#fff4e9;border-color:#f2bd8d;transform:translateY(-1px)}
+@media(max-width:700px){.admin-top{height:auto;min-height:54px;gap:10px}.admin-top-user{gap:8px}.admin-top-user>span{max-width:125px;font-size:10px}.admin-top-logout{padding:8px 10px;font-size:10px}.admin-top-logout svg{width:14px;height:14px}}
