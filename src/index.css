@@ -165,3 +165,18 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 .orange-light-loading::after{content:"";position:absolute;inset:-4px;border-radius:inherit;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 245deg,#ff8a00 285deg,#ffd28a 310deg,#ff8a00 330deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:orangeButtonOrbit 2s linear infinite}
 @keyframes orangeButtonOrbit{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.orange-light-loading::after{animation-duration:2s}}
+
+
+/* Requested product layout: 18 popular items (3 rows x 6 columns) and 16 shop items per page (2 rows x 8 columns) */
+.product-grid.home-popular-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.product-grid.shop-product-grid{grid-template-columns:repeat(8,minmax(0,1fr));gap:12px}
+.home-popular-grid .product-photo,.shop-product-grid .product-photo{height:clamp(105px,12vw,165px)}
+.home-popular-grid .product-info,.shop-product-grid .product-info{padding:10px}
+.home-popular-grid .product-name,.shop-product-grid .product-name{font-size:12px;line-height:1.35;min-height:33px}
+.home-popular-grid .price-row b,.shop-product-grid .price-row b{font-size:12px}
+.home-popular-grid .add-btn,.shop-product-grid .add-btn{font-size:10px;padding:9px}
+.shop-pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin:32px auto 0}
+.shop-pagination>span{font-size:12px;color:#817487;font-weight:700}
+.shop-pagination .btn:disabled{opacity:.4;cursor:not-allowed}
+@media(max-width:1100px){.product-grid.home-popular-grid{grid-template-columns:repeat(4,minmax(0,1fr))}.product-grid.shop-product-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:700px){.product-grid.home-popular-grid,.product-grid.shop-product-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.home-popular-grid .product-photo,.shop-product-grid .product-photo{height:145px}.shop-pagination{gap:10px;flex-wrap:wrap}.shop-pagination .btn{padding:11px 15px}}
