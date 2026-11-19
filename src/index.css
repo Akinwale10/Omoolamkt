@@ -165,19 +165,3 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 .icon-orbit-loading::after{content:"";position:absolute;inset:-7px;border-radius:50%;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 225deg,#ff8a00 265deg,#ffe0a8 290deg,#ff8a00 320deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:iconOrbit 1.15s linear infinite}
 @keyframes iconOrbit{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.icon-orbit-loading::after{animation-duration:2s}}
-
-
-/* Product sections keep the requested full column counts on every screen.
-   Smaller screens can swipe horizontally rather than collapsing the grids. */
-.section-pad:has(.home-popular-grid){overflow-x:auto}
-.page-wrap:has(.shop-product-grid){overflow-x:auto}
-.product-grid.home-popular-grid{grid-template-columns:repeat(6,minmax(140px,1fr));gap:14px;width:max-content;min-width:100%}
-.product-grid.shop-product-grid{grid-template-columns:repeat(8,minmax(120px,1fr));gap:12px;width:max-content;min-width:100%}
-.home-popular-grid .product-photo,.shop-product-grid .product-photo{height:clamp(105px,12vw,165px)}
-.home-popular-grid .product-info,.shop-product-grid .product-info{padding:10px}
-.home-popular-grid .product-name,.shop-product-grid .product-name{font-size:12px;line-height:1.35;min-height:33px}
-.home-popular-grid .price-row b,.shop-product-grid .price-row b{font-size:12px}
-.home-popular-grid .add-btn,.shop-product-grid .add-btn{font-size:10px;padding:9px}
-.shop-pagination{display:flex;align-items:center;justify-content:center;gap:18px;margin:32px auto 0}
-.shop-pagination>span{font-size:12px;color:#817487;font-weight:700}
-.shop-pagination .btn:disabled{opacity:.4;cursor:not-allowed}
