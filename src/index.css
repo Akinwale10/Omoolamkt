@@ -120,3 +120,8 @@
 
 /* Use Roboto consistently across the public storefront and admin dashboard */
 html,body,#root{font-family:'Roboto',Arial,sans-serif!important}*,*::before,*::after{font-family:'Roboto',Arial,sans-serif!important}
+
+/* Slightly stronger Roboto typography for clearer reading across the storefront and admin */
+html,body,#root{font-weight:500}
+body{font-weight:500}
+p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weight:500}
