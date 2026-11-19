@@ -165,3 +165,49 @@ p,li,label,input,textarea,select,button,a,small,td,th,.muted,.eyebrow{font-weigh
 .icon-orbit-loading::after{content:"";position:absolute;inset:-7px;border-radius:50%;padding:2px;pointer-events:none;background:conic-gradient(from 0deg,transparent 0deg 225deg,#ff8a00 265deg,#ffe0a8 290deg,#ff8a00 320deg,transparent 350deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 5px rgba(255,138,0,.9));animation:iconOrbit 1.15s linear infinite}
 @keyframes iconOrbit{to{transform:rotate(360deg)}}
 @media(prefers-reduced-motion:reduce){.icon-orbit-loading::after{animation-duration:2s}}
+
+
+/* OMOOLA motion system: refined, consistent motion across the storefront */
+:root{--omoola-ease:cubic-bezier(.22,1,.36,1);--omoola-orange:#f28b35;--omoola-purple:#32105b}
+@keyframes omoolaFadeUp{from{opacity:0;transform:translate3d(0,22px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+@keyframes omoolaFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes omoolaFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes omoolaPulse{0%,100%{box-shadow:0 0 0 0 rgba(242,139,53,0)}50%{box-shadow:0 0 0 7px rgba(242,139,53,.12)}}
+@keyframes omoolaShimmer{0%{background-position:180% 0}100%{background-position:-180% 0}}
+@keyframes omoolaSoftGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(242,139,53,0))}50%{filter:drop-shadow(0 5px 12px rgba(242,139,53,.25))}}
+.public-main{animation:omoolaFadeIn .35s ease both}
+.page-intro{animation:omoolaFadeUp .65s var(--omoola-ease) both}
+.hero-content{animation:omoolaFadeUp .9s var(--omoola-ease) both}
+.hero-background-slide img,.hero-background-slide>img{transition:transform 7s linear,filter .8s ease}
+.hero-background-slide[style*="opacity: 1"] img{transform:scale(1.045)}
+.site-header{animation:omoolaFadeIn .55s ease both}
+.desktop-nav a,.nav-actions a,.menu-toggle{transition:color .25s ease,background .25s ease,transform .25s var(--omoola-ease),box-shadow .25s ease}
+.desktop-nav a:hover,.nav-actions a:hover,.menu-toggle:hover{transform:translateY(-2px)}
+.brand-mark{transition:transform .45s var(--omoola-ease),box-shadow .35s ease}
+.brand:hover .brand-mark{transform:rotate(-9deg) scale(1.08);box-shadow:0 7px 22px rgba(242,139,53,.28)}
+.mobile-menu{animation:omoolaFadeUp .32s var(--omoola-ease) both;transform-origin:top}
+.btn,.add-btn,.cart-link,.icon-link,.shop-pagination button,.load-more{transition:transform .25s var(--omoola-ease),box-shadow .25s ease,background .25s ease,border-color .25s ease}
+.btn:hover,.add-btn:hover,.cart-link:hover,.icon-link:hover,.shop-pagination button:not(:disabled):hover,.load-more:hover{transform:translateY(-3px);box-shadow:0 10px 24px rgba(50,16,91,.13)}
+.btn:active,.add-btn:active,.cart-link:active,.icon-link:active{transform:scale(.97)}
+.product-card,.category-card,.promo-card,.about-purpose-grid article,.about-values .value-grid>div{animation:omoolaFadeUp .65s var(--omoola-ease) both;transition:transform .35s var(--omoola-ease),box-shadow .35s ease,border-color .3s ease}
+.product-grid>.product-card:nth-child(6n+1),.category-grid>.category-card:nth-child(6n+1),.promo-grid>.promo-card:nth-child(3n+1){animation-delay:.04s}
+.product-grid>.product-card:nth-child(6n+2),.category-grid>.category-card:nth-child(6n+2),.promo-grid>.promo-card:nth-child(3n+2){animation-delay:.09s}
+.product-grid>.product-card:nth-child(6n+3),.category-grid>.category-card:nth-child(6n+3),.promo-grid>.promo-card:nth-child(3n){animation-delay:.14s}
+.product-card:hover,.category-card:hover,.promo-card:hover,.about-purpose-grid article:hover,.about-values .value-grid>div:hover{transform:translateY(-7px);box-shadow:0 18px 38px rgba(47,19,68,.12);border-color:#ead9f3}
+.product-photo img,.category-card img,.promo-card img,.simple-shopping-image img,.about-story-image img,.detail-image img,.cart-item img{transition:transform .75s var(--omoola-ease),filter .5s ease}
+.product-card:hover .product-photo img,.category-card:hover img,.promo-card:hover img,.simple-shopping-image:hover img,.about-story-image:hover img{transform:scale(1.055);filter:saturate(1.08)}
+.category-card>div{transition:background .3s ease}
+.category-card:hover>div{background:linear-gradient(0deg,rgba(35,8,59,.94),rgba(35,8,59,.12))}
+.product-card .photo-tag{transition:transform .3s var(--omoola-ease),background .3s ease}
+.product-card:hover .photo-tag{transform:translateY(-2px);background:#ff9b4b}
+.section-pad{animation:omoolaFadeUp .75s var(--omoola-ease) both}
+.simple-shopping-copy,.promo-band-copy,.about-story-copy{animation:omoolaFadeUp .8s var(--omoola-ease) both}
+.search-box,.select-box,.sort-select,input,textarea{transition:border-color .25s ease,box-shadow .25s ease,background .25s ease}
+.search-box:focus-within,.select-box:focus-within,.sort-select:focus,input:focus,textarea:focus{border-color:#a777c5;box-shadow:0 0 0 4px rgba(130,72,169,.11)}
+.footer-column>a,.footer-address>a,.footer .socials a{transition:color .25s ease,transform .25s var(--omoola-ease),background .25s ease}
+.footer-column>a:hover,.footer-address>a:hover{transform:translateX(4px)}
+.footer .socials a:hover{transform:translateY(-4px) rotate(-5deg)}
+.loading-line,.skeleton,.loading-placeholder{background:linear-gradient(100deg,#f2edf5 20%,#fff 42%,#f2edf5 64%);background-size:200% 100%;animation:omoolaShimmer 1.5s ease-in-out infinite}
+button:focus-visible,a:focus-visible{outline:3px solid rgba(242,139,53,.55);outline-offset:3px}
+@media(hover:none){.product-card:hover,.category-card:hover,.promo-card:hover,.about-purpose-grid article:hover,.about-values .value-grid>div:hover{transform:none;box-shadow:none}.product-card:hover .product-photo img,.category-card:hover img,.promo-card:hover img{transform:none}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
