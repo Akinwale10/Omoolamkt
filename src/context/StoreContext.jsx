@@ -4,10 +4,33 @@ const C=createContext(null); export const useStore=()=>useContext(C);
 export function StoreProvider({children}){
  const [products,setProducts]=useState([]),[categories,setCategories]=useState([]),[banners,setBanners]=useState([]),[settings,setSettings]=useState(null),[loading,setLoading]=useState(true),[cart,setCart]=useState(()=>{try{return JSON.parse(localStorage.getItem('omoola-cart')||'[]')}catch{return[]}});
  const [session,setSession]=useState(null),[admin,setAdmin]=useState(false);
- const load=async()=>{if(!supabaseReady){setProducts([]);setCategories([]);setBanners([]);setLoading(false);console.error('Live catalogue unavailable: Supabase environment variables are missing.');return}
-  setLoading(true); try{const [p,c,b,s]=await Promise.all([supabase.from('products').select('*,category:categories(name,slug)').eq('is_active',true).order('created_at',{ascending:false}),supabase.from('categories').select('*').eq('is_active',true).order('sort_order'),supabase.from('promotional_banners').select('*').eq('is_active',true).order('sort_order'),supabase.from('website_settings').select('*').limit(1).maybeSingle()]);
-   if(p.error)throw p.error; setProducts(p.data||[]);setCategories(c.data||[]);setBanners(b.data||[]);setSettings(s.data||null);
-  }catch(e){console.error('Unable to load live Omoola catalogue:',e);setProducts([]);setCategories([])} finally{setLoading(false)} };
+ const load=async()=>{
+  if(!supabaseReady){setProducts([]);setCategories([]);setBanners([]);setLoading(false);console.error('Live catalogue unavailable: Supabase environment variables are missing.');return}
+  setLoading(true);
+  try{
+   const [categoryResult,bannerResult,settingsResult]=await Promise.all([
+    supabase.from('categories').select('*').eq('is_active',true).order('sort_order'),
+    supabase.from('promotional_banners').select('*').eq('is_active',true).order('sort_order'),
+    supabase.from('website_settings').select('*').limit(1).maybeSingle()
+   ]);
+   if(categoryResult.error)throw categoryResult.error;
+   const categoryRows=categoryResult.data||[];
+   const categoryMap=new Map(categoryRows.map(category=>[category.id,category]));
+   const productRows=[];
+   const pageSize=500;
+   for(let offset=0;;offset+=pageSize){
+    const result=await supabase.from('products').select('*').eq('is_active',true).order('created_at',{ascending:false}).range(offset,offset+pageSize-1);
+    if(result.error)throw result.error;
+    productRows.push(...(result.data||[]));
+    if(!result.data||result.data.length<pageSize)break;
+   }
+   setProducts(productRows.map(product=>({...product,category:categoryMap.get(product.category_id)||null})));
+   setCategories(categoryRows);
+   setBanners(bannerResult.data||[]);
+   setSettings(settingsResult.data||null);
+  }catch(e){console.error('Unable to load live Omoola catalogue:',e);setProducts([]);setCategories([]);setBanners([])}
+  finally{setLoading(false)}
+ };
  useEffect(()=>{load();if(!supabaseReady)return;let refreshPending=false;const refreshWhenVisible=()=>{if(document.visibilityState==='hidden'||refreshPending)return;refreshPending=true;load().finally(()=>{refreshPending=false})};const live=supabase.channel('omoola-store-live').on('postgres_changes',{event:'*',schema:'public',table:'products'},()=>load()).on('postgres_changes',{event:'*',schema:'public',table:'categories'},()=>load()).on('postgres_changes',{event:'*',schema:'public',table:'promotional_banners'},()=>load()).subscribe();window.addEventListener('focus',refreshWhenVisible);window.addEventListener('pageshow',refreshWhenVisible);window.addEventListener('online',refreshWhenVisible);document.addEventListener('visibilitychange',refreshWhenVisible);supabase.auth.getSession().then(({data})=>setSession(data.session));const {data:{subscription}}=supabase.auth.onAuthStateChange((_e,s)=>setSession(s));return()=>{subscription.unsubscribe();supabase.removeChannel(live);window.removeEventListener('focus',refreshWhenVisible);window.removeEventListener('pageshow',refreshWhenVisible);window.removeEventListener('online',refreshWhenVisible);document.removeEventListener('visibilitychange',refreshWhenVisible)}},[]);
  useEffect(()=>{localStorage.setItem('omoola-cart',JSON.stringify(cart))},[cart]);
  useEffect(()=>{let alive=true;async function check(){if(!session?.user){setAdmin(false);return}const {data}=await supabase.from('admin_profiles').select('role').eq('user_id',session.user.id).maybeSingle();if(alive)setAdmin(Boolean(data))}check();return()=>{alive=false}},[session]);
