@@ -12,22 +12,22 @@ export function StoreProvider({children}){
   try{
    // Public storefront reads use the same Supabase project and shared database as the admin dashboard.
    // Keep product reads independent from optional category/banner/settings requests.
-   const [categoryResult,bannerResult,settingsResult]=await Promise.all([
+   const [categoryResult,bannerResult,settingsResult,countResult]=await Promise.all([
     supabase.from('categories').select('*').eq('is_active',true).order('sort_order'),
     supabase.from('promotional_banners').select('*').eq('is_active',true).order('sort_order'),
-    supabase.from('website_settings').select('*').limit(1).maybeSingle()
+    supabase.from('website_settings').select('*').limit(1).maybeSingle(),
+    supabase.from('products').select('id',{count:'exact',head:true}).eq('is_active',true)
    ]);
    const categoryRows=categoryResult.error?[]:(categoryResult.data||[]);
    const bannerRows=bannerResult.error?[]:(bannerResult.data||[]);
-   const productRows=[];
+   if(countResult.error)throw new Error('Public product catalogue count failed: '+countResult.error.message);
+   const totalProducts=countResult.count||0;
    const pageSize=500;
-   for(let offset=0;;offset+=pageSize){
-    const result=await supabase.from('products').select('*').eq('is_active',true).order('created_at',{ascending:false}).range(offset,offset+pageSize-1);
-    if(result.error)throw new Error('Public product catalogue read failed: '+result.error.message);
-    const batch=result.data||[];
-    productRows.push(...batch);
-    if(batch.length<pageSize)break;
-   }
+   const offsets=Array.from({length:Math.ceil(totalProducts/pageSize)},(_,index)=>index*pageSize);
+   const pages=await Promise.all(offsets.map(offset=>supabase.from('products').select('*').eq('is_active',true).order('created_at',{ascending:false}).range(offset,offset+pageSize-1)));
+   const failedPage=pages.find(result=>result.error);
+   if(failedPage)throw new Error('Public product catalogue read failed: '+failedPage.error.message);
+   const productRows=pages.flatMap(result=>result.data||[]);
    if(current!==requestId.current)return;
    const categoryMap=new Map(categoryRows.map(category=>[category.id,category]));
    setProducts(productRows.map(product=>({...product,category:categoryMap.get(product.category_id)||null})));
