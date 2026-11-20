@@ -23,8 +23,7 @@ const HOME_FOOD_SLIDES=[
  {name:'Cake',tag:'A sweet treat worth sharing',image:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1400&auto=format&fit=crop&q=88',alt:'Beautiful freshly decorated cake'},
  {name:'Fresh Bread',tag:'Soft, fresh goodness for every home',image:'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=1400&auto=format&fit=crop&q=88',alt:'Freshly baked loaves of bread'},
  {name:'Burger Rolls',tag:'The perfect start to a great burger',image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=1400&auto=format&fit=crop&q=88',alt:'Fresh burger with soft burger bun'},
- {name:'Doughnuts',tag:'Little rings of delicious happiness',image:'https://images.unsplash.com/photo-1551024506-0?
-w=1400&auto=format&fit=crop&q=88',alt:'Fresh glazed doughnuts'},
+ {name:'Doughnuts',tag:'Little rings of delicious happiness',image:'https://images.unsplash.com/photo-1772469530358-efb683bfdf57?auto=format&fit=crop&fm=jpg&q=88&w=1400',alt:'Fresh glazed doughnuts'},
  {name:'Nescafé',tag:'Enjoy a comforting cup of coffee',image:'https://images.unsplash.com/photo-1509042239860-f550ce710b93?w=1400&auto=format&fit=crop&q=88',alt:'A freshly prepared cup of coffee'},
  {name:'Meat Pie',tag:'Golden pastry with a savoury filling',image:'https://images.unsplash.com/photo-1608039829572-78524f79c4c7?w=1400&auto=format&fit=crop&q=88',alt:'Freshly baked savoury meat pie'}
 ];
